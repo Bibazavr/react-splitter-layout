@@ -203,6 +203,19 @@ class SplitterLayout extends React.Component {
 
     return (
       <div className={containerClasses} ref={(c) => { this.container = c; }}>
+        {wrappedChildren.length === 1 &&
+        (
+          <div
+            role="separator"
+            className="layout-splitter"
+            ref={(c) => { this.splitter = c; }}
+            onMouseDown={this.handleSplitterMouseDown}
+            onTouchStart={this.handleSplitterMouseDown}
+          >
+            {this.props.separatorContent}
+          </div>
+        )
+        }
         {wrappedChildren[0]}
         {wrappedChildren.length > 1 &&
           (
@@ -212,7 +225,9 @@ class SplitterLayout extends React.Component {
               ref={(c) => { this.splitter = c; }}
               onMouseDown={this.handleSplitterMouseDown}
               onTouchStart={this.handleSplitterMouseDown}
-            />
+            >
+              {this.props.separatorContent}
+            </div>
           )
         }
         {wrappedChildren.length > 1 && wrappedChildren[1]}
@@ -232,6 +247,7 @@ SplitterLayout.propTypes = {
   onDragStart: PropTypes.func,
   onDragEnd: PropTypes.func,
   onSecondaryPaneSizeChange: PropTypes.func,
+  separatorContent: PropTypes.node,
   children: PropTypes.arrayOf(PropTypes.node)
 };
 
@@ -246,6 +262,7 @@ SplitterLayout.defaultProps = {
   onDragStart: null,
   onDragEnd: null,
   onSecondaryPaneSizeChange: null,
+  separatorContent: null,
   children: []
 };
 
